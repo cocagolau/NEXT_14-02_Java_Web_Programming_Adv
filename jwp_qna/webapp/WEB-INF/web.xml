@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>QnA</display-name>
+	
+	<!-- 최초로 접근 가능하도록 servlet 설정이 필요함  -->
+	<servlet>
+		<servlet-name>dec</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	</servlet>
+	
+	<!--
+		servlet name이 slipp인 경우
+		Spring에서 제공하는 DispatcherServlet에 의해 
+		WEB-INF/slipp-servlet.xml를 자동적으로 찾음	
+	-->
+	<servlet-mapping>
+		<servlet-name>dec</servlet-name>
+		<!-- 모든 요청을 root로 보내기 때문에 js, css 등 파일을 전달하지 못하는 문제가 있음. -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>/jsp/home.jsp</welcome-file>
+	</welcome-file-list>
+	
+</web-app>

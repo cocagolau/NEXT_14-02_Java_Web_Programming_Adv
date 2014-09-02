@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- 특정 위치에 존재하는 controller 클래스를 로딩하기 위한 코드 -->
+	<context:component-scan base-package="me.dec7.web" />
+	
+	<!--
+		controller를 인식하는 방법에 대한 코드
+		controller간의 mapping을 annotation 기반으로 한다는 설정
+	-->
+	<mvc:annotation-driven />
+	
+	<!--
+		dispatcher servlet의 url mapping이 / 인 경우 static파일 요청도 들어오고 읽지 못하는 문제 발생하기 때문
+		/images/로 시작하는 모든 요청 (**)에 대해서는 location directory를 참고하라는 내용
+	-->
+	<mvc:resources location="/images/" mapping="/images/**" />
+	<mvc:resources location="/stylesheets/" mapping="/stylesheets/**" />
+	<mvc:resources location="/javascripts/" mapping="/javascripts/**" />
+	
+	<!--
+		view에 대한 설정 / jsp를 접근할 때 어떤 방식으로 할 건지에 대한 설정
+		internal view resolver: project 내부에 있는 resource에 접근 하라는 의미
+	 -->
+	 <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+	 	p:prefix="/WEB-INF/jsp/"
+	 	p:suffix=".jsp" />
+	 	
+
+</beans>
