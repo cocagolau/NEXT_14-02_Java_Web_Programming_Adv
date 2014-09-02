@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<!-- instance를 생성하는 부분과 동등 -->
+	<!-- new MessageProvider() -->
+	<bean id="messageProvider" class="me.dec7.di.HelloWorldMessageProvider" />
+	<!-- <bean id="messageProvider" class="me.dec7.di.HiWorldMessageProvider" /> -->
+	
+	<!-- MessageRenderer renderer = new MessageRenderer(); -->
+	<bean id="messageRenderer" class="me.dec7.di.MessageRenderer">
+		
+		<!--
+			ref는 class에 대한 reference 정보
+			value는 문자열 그 자체의 정보
+		-->
+		<!-- renderer.setMessageProvider(new HelloWorldMessageProvider()); -->
+		<property name="messageProvider" ref="messageProvider" />
+	
+	</bean>
+	
+	
+	
+</beans>

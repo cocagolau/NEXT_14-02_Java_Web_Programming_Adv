@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<!-- 
+	properties 형태, key value 쌍으로 사용
+	spring frame work에서 사용할 수 있음
+ -->
+<properties>
+	<comment>application-properties</comment>
+	
+	<!-- Database -->
+	<entry key="database.driverClassName">org.h2.driver</entry>
+	<entry key="database.url">jdbc:h2:~/dec</entry>
+	<entry key="database.username">sa</entry>
+	<entry key="database.password"></entry>
+
+</properties>

@@ -49,12 +49,32 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		
+		<!-- h2db -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.179</version>
+		</dependency>
+		
+		<!-- dbcp -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.2</version>
+		</dependency>
 		
 	</dependencies>
 
 	<build>
 		<finalName>jwp_qna</finalName>
-		<resources>
+		
+		<resources>	
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
