@@ -5,18 +5,13 @@
 	<artifactId>jwp_qna</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
-	
-	<!--
-		특정 값을 지정
-		
-		properties element를 사용하여 중복을 제거
-		
-		source code 뿐만 아니라 설정파일도 중복 제거는 중요함
-	-->
+
+	<!-- 특정 값을 지정 properties element를 사용하여 중복을 제거 source code 뿐만 아니라 설정파일도 중복 
+		제거는 중요함 -->
 	<properties>
 		<org.springframework.version>4.0.5.RELEASE</org.springframework.version>
 	</properties>
-	
+
 	<dependencies>
 		<!-- logger -->
 		<dependency>
@@ -24,7 +19,7 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.2</version>
 		</dependency>
-	
+
 		<!-- unit testing -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -37,20 +32,26 @@
 			<artifactId>hamcrest-all</artifactId>
 			<version>1.3</version>
 		</dependency>
-		
+
 		<!-- form validation using accotations -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
-		</dependency>
-		
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.1.0.Final</version>
+			<version>5.1.2.Final</version>
 		</dependency>
-	
+
+		<!-- valiation test runtime시 필요한 library -->
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
 		<!-- servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -62,7 +63,7 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
+
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -79,27 +80,27 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		
+
 		<!-- h2db -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.179</version>
 		</dependency>
-		
+
 		<!-- dbcp -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
 		<finalName>jwp_qna</finalName>
-		
-		<resources>	
+
+		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
@@ -120,7 +121,7 @@
 					<warSourceDirectory>webapp</warSourceDirectory>
 				</configuration>
 			</plugin>
-			
+
 			<!-- wtp -->
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -132,7 +133,7 @@
 					<wtpContextName>/</wtpContextName>
 				</configuration>
 			</plugin>
-			
+
 			<!-- maven compiler -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
