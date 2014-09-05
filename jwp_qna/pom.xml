@@ -57,11 +57,12 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			
+			<!--
+				servlet은 tomcat에서 이미 제공되어지는 library임
+				따라서 배포될 필요가 없고 scope를 provied로 설정하여 배포되지 않도록 (war 파일에 포함안됨) 설정함
+			 -->
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- spring -->
