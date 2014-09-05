@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import me.dec7.dao.users.UserDao;
+import me.dec7.domain.users.Authenticate;
 import me.dec7.domain.users.User;
 
 import org.slf4j.Logger;
@@ -64,6 +65,38 @@ public class UserController {
 		
 		return "/users/form";
 	}
+	
+	@RequestMapping("login/form")
+	public String loginForm(Model model) {
+		model.addAttribute("authenticate", new Authenticate());
+		
+		return "/users/login";
+	}
+	
+	
+	/*
+	 * User와 다른 Validation을 처리하기 Authenticate를 생성 
+	 */
+	@RequestMapping("login")
+	public String login(@Valid Authenticate authenticate, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "/users/login";
+		}
+		
+		User user = userDao.findById(authenticate.getUserId());
+		if (user == null) {
+			// TODO error 처리 - 존재하지 않는 사용자			
+		}
+		
+		if (!user.getPassword().equals(authenticate.getPassword())) {
+			// TODO error 처리 - 비밀번호가 틀린 경우
+		}
+		
+		// TODO session에 사용자 정보 저장
+		
+		return "redirect:/";
+	}
+	
 	
 	/*
 	 * method는 post방식이고, 구별을 위해 mapping은 value로 적용
