@@ -9,7 +9,7 @@
 	<comment>application-properties</comment>
 	
 	<!-- Database -->
-	<entry key="database.driverClassName">org.h2.driver</entry>
+	<entry key="database.driverClassName">org.h2.Driver</entry>
 	<entry key="database.url">jdbc:h2:~/dec</entry>
 	<entry key="database.username">sa</entry>
 	<entry key="database.password"></entry>

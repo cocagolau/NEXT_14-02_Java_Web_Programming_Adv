@@ -6,6 +6,13 @@
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 	
+	<!--
+		특정 값을 지정
+		
+		properties element를 사용하여 중복을 제거
+		
+		source code 뿐만 아니라 설정파일도 중복 제거는 중요함
+	-->
 	<properties>
 		<org.springframework.version>4.0.5.RELEASE</org.springframework.version>
 	</properties>
@@ -47,6 +54,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
@@ -101,6 +113,8 @@
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<version>2.9</version>
 				<configuration>
+					<!-- class file의 source code를 보여줌 -->
+					<downloadSources>true</downloadSources>
 					<wtpversion>2.0</wtpversion>
 					<wtpContextName>/</wtpContextName>
 				</configuration>
