@@ -35,6 +35,8 @@
 						<div class="controls">
 							<form:input path="userId" />
 							<!-- <input type="text" name="userId" value="" /> -->
+							<!-- error message인 경우 form:errors라는 tag를 이용하여 적용 가능 -->
+							<form:errors path="userId" cssClass="error" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -42,6 +44,7 @@
 						<div class="controls">
 							<form:password path="password" />
 							<!-- <input type="password" id="password" name="password" placeholder="" /> -->
+							<form:errors path="password" cssClass="error" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -49,6 +52,7 @@
 						<div class="controls">
 							<form:input path="name" />
 							<!-- <input type="text" id="name" name="name" value="" placeholder="" /> -->
+							<form:errors path="name" cssClass="error" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -56,6 +60,7 @@
 						<div class="controls">
 							<form:input path="email" />
 							<!-- <input type="text" id="email" name="email" value="" /> -->
+							<form:errors path="email" cssClass="error" />
 						</div>
 					</div>
 					<div class="control-group">

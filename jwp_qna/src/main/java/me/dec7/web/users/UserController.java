@@ -1,5 +1,9 @@
 package me.dec7.web.users;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import me.dec7.dao.users.UserDao;
 import me.dec7.domain.users.User;
 
@@ -8,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -69,13 +75,31 @@ public class UserController {
  * 	등 매개변수를 통해 입력데이터를 받아올 수도 있으나
  * 	전달 받는 데이터의 양이 많아지거나 매개변수의 이름이 변경되는 경우 자동적으로 처기하기 어려우므로 다른 방식을 이용함
  */
-	public String create(User user) {
+	public String create(@Valid User user, BindingResult bindingResult) {
+		/*
+		 * create method에서 validation 필요
+		 * 
+		 * @Valid Annotation을 이용하면 User Class에 설정한 대로 유효성 검증이 이루어지고
+		 * 결과는 BindingResult 객체로 반환됨
+		 */
+		
+		// bindingResult가 error인 경우		
+		if (bindingResult.hasErrors()) {
+			log.debug("Binding Result has error");
+			List<ObjectError> errors = bindingResult.getAllErrors();
+			for (ObjectError error : errors) {
+				log.debug("error[{}]: {}", error.getCode(), error.getDefaultMessage());
+			}
+			
+			return "users/form";
+		}
+		
 		log.debug("User: {}", user);
 		
 		userDao.create(user);
 		log.debug("Database: {}", userDao.findById(user.getUserId()));
 		
-		return "users/form";
+		return "redirect:/";
 	}
 
 }

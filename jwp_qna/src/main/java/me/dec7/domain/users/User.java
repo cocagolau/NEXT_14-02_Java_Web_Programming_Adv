@@ -1,10 +1,27 @@
 package me.dec7.domain.users;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User {
 	
+	/*
+	 * @NotNull 에서 @NotEmpty로 변경한 이유
+	 * 사용자가 값을 입력을 했을 때 빈문자열이 전달되기 때문에 NotEmpty로 해야 정상적으로 전달됨
+	 */
+	@NotEmpty @Size(min=4, max=12)
 	private String userId;
+	
+	@NotEmpty @Size(min=4, max=12)
 	private String password;
+	
+	@NotEmpty
 	private String name;
+	
+	@Email
 	private String email;
 	
 	public User () {
