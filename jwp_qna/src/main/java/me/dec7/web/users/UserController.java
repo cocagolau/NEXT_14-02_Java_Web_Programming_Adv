@@ -62,7 +62,7 @@ public class UserController {
 		model.addAttribute("user", new User());
 		
 		
-		return "users/form";
+		return "/users/form";
 	}
 	
 	/*
@@ -91,14 +91,21 @@ public class UserController {
 				log.debug("error[{}]: {}", error.getCode(), error.getDefaultMessage());
 			}
 			
-			return "users/form";
+			return "/users/form";
 		}
 		
 		log.debug("User: {}", user);
 		
+		/*
+		 * UserControllerTest.create()에서 Mock을 사용하지 않는 경우
+		 * userDao instance를 전달하지 않기 때문에 null point exception이 발생할 수 밖에 없음
+		 */
 		userDao.create(user);
 		log.debug("Database: {}", userDao.findById(user.getUserId()));
 		
+		/*
+		 * test시 userDao에 대한 instance를 전달하지 않음
+		 */
 		return "redirect:/";
 	}
 
