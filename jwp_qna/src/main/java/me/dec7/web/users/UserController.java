@@ -78,19 +78,37 @@ public class UserController {
 	 * User와 다른 Validation을 처리하기 Authenticate를 생성 
 	 */
 	@RequestMapping("login")
-	public String login(@Valid Authenticate authenticate, BindingResult bindingResult) {
+	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return "/users/login";
 		}
 		
 		User user = userDao.findById(authenticate.getUserId());
 		if (user == null) {
-			// TODO error 처리 - 존재하지 않는 사용자			
+			model.addAttribute("errorMessage", "존재하지 않는 사용자입니다");
+			return "/users/login";
 		}
 		
+		/*
+		 * 문제
+		 * 1. 보통 이런방식으로 비교를 많이 하지만 코드가 조금 지저분함
+		 * 2. user와 authenticate class 2개나 만들었지만 사용 안함.
+		 * 3. login method 내부에 여러가지 분기분이 존재하여 개별 test어려움 
+		 *  --> 이러한 로직을 따로 빼기보다는 만든 class에 담아서 처리하는 방법을 권유
+		 *  
+		 *  데이터를 담은 class 들이 가능한 많은 일을 할 수 있도록 책임을 분할 / 객체지향적인 접근
+		 *  
 		if (!user.getPassword().equals(authenticate.getPassword())) {
 			// TODO error 처리 - 비밀번호가 틀린 경우
 		}
+		
+		 */
+		 if (!user.matchPassword(authenticate)) {
+			 model.addAttribute("errorMessage", "비밀번호가 틀립니다.");
+				return "/users/login";
+		 }
+		
+		
 		
 		// TODO session에 사용자 정보 저장
 		

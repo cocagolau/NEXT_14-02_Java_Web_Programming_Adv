@@ -49,5 +49,25 @@ public class UserTest {
 			log.debug("violation error message : {}", constraintViolation.getMessage());
 		}
 	}
+	
+	
+	@Test
+	public void matchPassword() throws Exception {
+		String password = "password";
+		User user = new User("userId", password, "name", "dec7@gmail.com");
+		
+		Authenticate authenticate = new Authenticate("userId", password);
+		assertThat(user.matchPassword(authenticate), is(true));
+		
+		authenticate = new Authenticate("userId", "password2");
+		assertFalse(user.matchPassword(authenticate));
+	}
+	
+	
 
 }
+
+
+
+
+

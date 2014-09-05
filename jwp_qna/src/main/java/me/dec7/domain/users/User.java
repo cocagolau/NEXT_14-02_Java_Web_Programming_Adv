@@ -100,6 +100,16 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", email=" + email + "]";
 	}
+
+	public boolean matchPassword(Authenticate authenticate) {
+		
+		if (this.password == null) {
+			return false;
+		}
+		
+//		return this.password.equals(authenticate.getPassword());
+		return authenticate.matchPassword(this.password);
+	}
 	
 	
 	
