@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserMapper">
+	<!-- 
+		id는 method이름처럼 select 구문이 어떤 일을 하는지를 적음
+	 -->
+	<select id="findById" resultType="me.dec7.domain.users.User">
+		select * from USERS where userId = #{userId}
+	</select>
+	
+	<insert id="create">
+		insert into USERS values(#{userId}, #{password}, #{name}, #{email})
+	</insert>
+</mapper>
