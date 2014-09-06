@@ -43,6 +43,10 @@ public class UserController {
 	/*
 	 * UserDao와 의존관계를 가지도록 설정
 	 */
+	/*
+	 * UserController가 UserDao에 대한 의존성이 큼.
+	 * 만약 MyBatis를 이용해서 Dao interface로만 의존한다면 서로간의 의존성이 크게 낮아질 것임
+	 */
 	@Autowired
 	private UserDao userDao;
 	

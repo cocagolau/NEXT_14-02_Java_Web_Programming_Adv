@@ -23,8 +23,29 @@
 	
 	
 	<!-- database와 connection을 통해 query를 실행해야하므로 datasource를 전달해야함  -->
-	<bean id="userDao" class="me.dec7.dao.users.UserDao" 
+	<!--  <bean id="userDao" class="me.dec7.dao.users.JdbcUserDao" 
+		p:dataSource-ref="dataSource" /> -->
+		
+	<bean id="userDao" class="me.dec7.dao.users.MyBatisUserDao" 
+		p:sqlSession-ref="sqlSession"
+		p:dataSource-ref="dataSource" />
+	
+	<!-- mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
-	/>
+		p:mapperLocations="classpath:me/dec7/dao/users/UserMapper.xml" />
+		
+		<!-- p:는 setter-injection -->
+		
+	<!-- SqlSession -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<!-- 
+			constructor-arg는 DI를 설정할 때 constructor-injection을 사용함.
+			<생성자 주입>
+		-->
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+	
 	
 </beans>
