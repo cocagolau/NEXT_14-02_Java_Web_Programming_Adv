@@ -122,9 +122,16 @@
 		<finalName>jwp_qna</finalName>
 
 		<resources>
+		
+			<!-- 기본 resource directory -->
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
+			
+			<!--
+				java directory에 있는 resource file도 복사해 사용할 수 있음
+				다만 .java file은 제외 할 수 있음
+			-->
 			<resource>
 				<directory>src/main/java</directory>
 				<excludes>

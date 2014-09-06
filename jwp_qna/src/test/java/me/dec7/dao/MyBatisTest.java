@@ -1,12 +1,15 @@
 package me.dec7.dao;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.io.InputStream;
 
+import javax.sql.DataSource;
+
 import me.dec7.domain.users.User;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,9 +18,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 public class MyBatisTest {
-	
 	private static final Logger log = LoggerFactory.getLogger(MyBatisTest.class); 
 	private SqlSessionFactory sqlSessionFactory;
 	
@@ -26,9 +31,24 @@ public class MyBatisTest {
 		String resource = "mybatis-config-test.xml";
 		InputStream is = Resources.getResourceAsStream(resource);
 		sqlSessionFactory = new SqlSessionFactoryBuilder().build(is);
+		
+		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		populator.addScript(new ClassPathResource("dec7.sql"));
+		DatabasePopulatorUtils.execute(populator, getDataSource());
+		
+		log.info("database initialized success!!");
 
 	}
 	
+	private DataSource getDataSource() {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName("org.h2.Driver");
+		dataSource.setUrl("jdbc:h2:~/dec7");
+		dataSource.setUsername("sa");
+		
+		return dataSource;
+	}
+
 	@Test
 	public void gettingStarted() {
 		/*

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<typeAliases>
+		<typeAlias alias="User" type="me.dec7.domain.users.User"/>
+	</typeAliases>
+
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -12,7 +16,8 @@
 			</dataSource>
 		</environment>
 	</environments>
+	
 	<mappers>
-		<mapper resource="UserMapper.xml" />
+		<mapper resource="me/dec7/dao/users/UserMapper.xml" />
 	</mappers>
 </configuration>

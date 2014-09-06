@@ -4,11 +4,14 @@
 	<!-- 
 		id는 method이름처럼 select 구문이 어떤 일을 하는지를 적음
 	 -->
-	<select id="findById" resultType="me.dec7.domain.users.User">
+	<select id="findById" resultType="User">
 		select * from USERS where userId = #{userId}
 	</select>
 	
 	<insert id="create">
 		insert into USERS values(#{userId}, #{password}, #{name}, #{email})
 	</insert>
+	
+	<!-- dao와 관련된 xml파일을 관리할 때 같은 directory에서 관리하는게 좋지 않을까 하심.. -->
 </mapper>
+
