@@ -33,7 +33,9 @@
 	<!-- mybatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
-		p:mapperLocations="classpath:me/dec7/dao/users/UserMapper.xml" />
+		p:configLocation="classpath:/mybatis-config.xml" />
+		
+	
 		
 		<!-- p:는 setter-injection -->
 		

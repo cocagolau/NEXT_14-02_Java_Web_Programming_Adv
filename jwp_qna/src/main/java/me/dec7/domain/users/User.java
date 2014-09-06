@@ -2,9 +2,11 @@ package me.dec7.domain.users;
 
 import javax.validation.constraints.Size;
 
+import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+@Alias("user")
 public class User {
 	
 	/*

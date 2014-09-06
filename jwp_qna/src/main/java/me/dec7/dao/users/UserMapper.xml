@@ -4,7 +4,7 @@
 	<!-- 
 		id는 method이름처럼 select 구문이 어떤 일을 하는지를 적음
 	 -->
-	<select id="findById" resultType="me.dec7.domain.users.User">
+	<select id="findById" resultType="user">
 		select * from USERS where userId = #{userId}
 	</select>
 	

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- <typeAlias alias="User" type="me.dec7.domain.users.User"/> -->
+		<package name="me.dec7.domain" />
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="me/dec7/dao/users/UserMapper.xml" />
+	</mappers>
+</configuration>
