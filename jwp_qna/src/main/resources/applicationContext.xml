@@ -3,8 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 	<!-- 목적:  application-properties를 읽어와서 dbcp를 설정 -->
 	
@@ -48,6 +50,15 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
+	<!-- 
+		transaction 설정 가능
+		namespace 기반 transaction처리를 위해 tx namespace를 추가함
+	-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+	
+	<!-- annotation기반으로 transaction 처리하기 -->
+	<tx:annotation-driven />
 	
 	
 </beans>
