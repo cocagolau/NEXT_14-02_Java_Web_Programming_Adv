@@ -1,6 +1,7 @@
 package me.dec7.web.users;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -12,13 +13,16 @@ import me.dec7.domain.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.sun.xml.internal.txw2.IllegalAnnotationException;
 
 @Controller
 /*
@@ -53,11 +57,12 @@ public class UserController {
 	}
 	 */
 	
+	@Autowired
+	private MessageSource messageSource;
+	
 //	@RequestMapping("/users/form")
 	@RequestMapping("/form")
-	public String form(Model model) {
-		
-		
+	public String createform(Model model) {
 		/*
 		 * spring form tag를 사용시 path element의 값은 DTO의 setter/getter와 연결되어야 함
 		 */
@@ -71,7 +76,6 @@ public class UserController {
 		 */
 		model.addAttribute("user", new User());
 		
-		
 		return "/users/form";
 	}
 	
@@ -80,6 +84,23 @@ public class UserController {
 		model.addAttribute("authenticate", new Authenticate());
 		
 		return "/users/login";
+	}
+	
+	@RequestMapping("{userId}/form")
+	/*
+	 * 만약 pathvariable과 매개변수의 이름이 동일할 경우 새로운 이름지정을 생략해도 됨
+	public String updateForm(@PathVariable("userId") String userId, Model model) {
+	
+	*/
+	public String updateForm(@PathVariable String userId, Model model) {
+		if (userId == null) {
+			throw new IllegalAnnotationException(messageSource.getMessage("User.userId.null", null, Locale.KOREA));
+		}
+		
+		User user = userDao.findById(userId);
+		model.addAttribute("user", user);
+		
+		return "/users/form";
 	}
 	
 	
@@ -107,7 +128,7 @@ public class UserController {
 		
 		User user = userDao.findById(authenticate.getUserId());
 		if (user == null) {
-			model.addAttribute("errorMessage", "존재하지 않는 사용자입니다");
+			model.addAttribute("errorMessage", messageSource.getMessage("User.userId.null", null, Locale.KOREA));
 			return "/users/login";
 		}
 		
@@ -126,7 +147,7 @@ public class UserController {
 		
 		 */
 		 if (!user.matchPassword(authenticate)) {
-			 model.addAttribute("errorMessage", "비밀번호가 틀립니다.");
+			 model.addAttribute("errorMessage", messageSource.getMessage("User.password.mismatch", null, Locale.KOREA));
 				return "/users/login";
 		 }
 		
@@ -178,6 +199,45 @@ public class UserController {
 		/*
 		 * test시 userDao에 대한 instance를 전달하지 않음
 		 */
+		return "redirect:/";
+	}
+	
+	
+	@RequestMapping(value="", method=RequestMethod.PUT)
+	public String update(@Valid User user, BindingResult bindingResult, HttpSession session) {
+		
+		if (bindingResult.hasErrors()) {
+			log.debug("Binding Result has error");
+			List<ObjectError> errors = bindingResult.getAllErrors();
+			for (ObjectError error : errors) {
+				log.debug("error[{}]: {}", error.getCode(), error.getDefaultMessage());
+			}
+			
+			return "/users/" + user.getUserId() + "/form";
+		}
+		
+		/*	
+		 * 보안1
+		 * userId가 null인 경우 정상적인 접근이 아니므로 무시
+		 * (방어코드) 잘못된 접근이므로 사용자에게 메시지를 전달하지 않아도 됨 
+		 */
+		Object temp = session.getAttribute("userId");
+		if (temp == null) {
+			throw new NullPointerException();
+		}
+		
+		/*
+		 * 보안2
+		 * 수정이기 때문에 로그인 된 사용자만 수정할 수 있어야함.
+		 */
+		String userId = (String) temp;
+		if (!user.matchUserId(userId)) {
+			throw new NullPointerException();
+		}
+		
+		userDao.update(user);
+		log.debug("Database: {}", userDao.findById(user.getUserId()));
+		
 		return "redirect:/";
 	}
 
