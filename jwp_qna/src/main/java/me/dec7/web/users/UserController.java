@@ -2,6 +2,7 @@ package me.dec7.web.users;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import me.dec7.dao.users.UserDao;
@@ -11,6 +12,7 @@ import me.dec7.domain.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+/*
+ * @Scope("session")
+ * 
+ * applicatioContext.xml에 되어있는 설정처럼
+ * bean 등록 및 component-scan 직후 session은 기본적으로 singleton으로 설정됨
+ * 그 상황에서 controller를 특정 scope로 설정할 수 있음
+ */
 @RequestMapping("/users")
 /*
  * class에 requestMapping을 적용하는 경우 모든 하위 mehthod에 대해서도 적용 가능
@@ -74,11 +83,24 @@ public class UserController {
 	}
 	
 	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("userId");
+		
+		return "redirect:/";
+	}
+	
+	
 	/*
 	 * User와 다른 Validation을 처리하기 Authenticate를 생성 
 	 */
 	@RequestMapping("login")
-	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, Model model) {
+//	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, Model model) {
+	
+	/*
+	 * session에 접근하길 원할 경우, 인자에 HttpSession을 매개변수로 받으면 됨
+	 */
+	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, HttpSession session, Model model) {
 		if (bindingResult.hasErrors()) {
 			return "/users/login";
 		}
@@ -108,9 +130,8 @@ public class UserController {
 				return "/users/login";
 		 }
 		
-		
-		
 		// TODO session에 사용자 정보 저장
+		 session.setAttribute("userId", user.getUserId());
 		
 		return "redirect:/";
 	}

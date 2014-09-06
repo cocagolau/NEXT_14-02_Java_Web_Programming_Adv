@@ -9,4 +9,4 @@ CREATE TABLE USERS (
 	PRIMARY KEY               (userId)
 );
 
-INSERT INTO USERS VALUES('javajigi', 'password', '자바지기', 'javajigi@slipp.net');
+INSERT INTO USERS VALUES('dec7', 'qqqq1111', '동규', 'dec7@gmail.com');
