@@ -9,7 +9,22 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
 	<!-- 특정 위치에 존재하는 controller 클래스를 로딩하기 위한 코드 -->
+	<!--
 	<context:component-scan base-package="me.dec7.web" />
+	 
+		component-scan을 사용하다보면
+		parent인 applicationContext.xml에서 scan된 bean이
+		children 중 하나인 dec-servlet.xml에서 scan될 수도 있다.
+		
+		그러면 2개 이상의 bean이 생성될 수 있다.
+		이 문제를 막기 위해서 include와 exclude 기능을 사용할 수 있다.
+	 -->
+	 <context:component-scan base-package="me.dec7.web" >
+	 	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	 	<!-- 
+	 		Controller annotation에 해당하는 것만 component scan을 하고 나머지는 exclude를 하라는 의미
+	 	-->
+	 </context:component-scan>
 	
 	<!--
 		controller를 인식하는 방법에 대한 코드

@@ -7,14 +7,27 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+		
+	<!-- 
+		backend를 아래 bean처럼 설정하기보다 mvc처럼 annotation 기반으로 설정할 수 있다면 훨씬 편하게 설정할 수 있을 것임
+		component-scan을 이용해서 설정 가능
+	 -->
+	<context:component-scan base-package="me.dec7.dao">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<!-- 
+			back package에서 Conntroller annotation을 제외한 나머지를 include 하라는 의미
+		 -->
+	</context:component-scan>
+	
 
 	<!-- 목적:  application-properties를 읽어와서 dbcp를 설정 -->
 	
 	<!-- *를 붙이면 classpath에 있는 모든 application-properties.xml을 불러오라는 의미로 사용 -->
 	<context:property-placeholder location="classpath*:application-properties.xml"/>
 	
-	<!-- @PostContruct 같은 Annotation 설정을 실행하기 위해서 -->
+	<!-- @PostConstruct 같은 Annotation 설정을 실행하기 위해서 -->
 	<context:annotation-config />
+	
 	
 	<!-- properties 파일을 다음과 같이 사용할 수 있음 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
@@ -27,9 +40,12 @@
 	<!-- database와 connection을 통해 query를 실행해야하므로 datasource를 전달해야함  -->
 	<!--  <bean id="userDao" class="me.dec7.dao.users.JdbcUserDao" 
 		p:dataSource-ref="dataSource" /> -->
-		
+	
+	<!--
+		context:component-scan 을 통해 bean이 아닌 annotation기반으로 lookup
 	<bean id="userDao" class="me.dec7.dao.users.MyBatisUserDao" 
 		p:sqlSession-ref="sqlSession"  />
+	 -->
 		<!-- p:dataSource-ref="dataSource" /> -->
 	
 	<!-- mybatis -->

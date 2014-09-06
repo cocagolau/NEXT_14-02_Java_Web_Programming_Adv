@@ -3,6 +3,7 @@ package me.dec7.web.users;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -47,7 +48,13 @@ public class UserController {
 	 * UserController가 UserDao에 대한 의존성이 큼.
 	 * 만약 MyBatis를 이용해서 Dao interface로만 의존한다면 서로간의 의존성이 크게 낮아질 것임
 	 */
-	@Autowired
+//	@Autowired
+//	@Resource(name="myBatisUserDao")
+	@Resource(name="userDao")
+	/*
+	 * 즉 bean에 등록되지 않더라도 해당 class 이름이 자동적으로 resource name <bean id>가 됨
+	 * 이것이 싫다면 @Repository("name") 다음 처럼 annotation에 특정 이름을 지정하여 id로 사용할 수 있음
+	 */
 	private UserDao userDao;
 	
 	/*
