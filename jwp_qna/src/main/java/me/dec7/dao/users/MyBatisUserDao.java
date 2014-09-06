@@ -1,16 +1,10 @@
 package me.dec7.dao.users;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-
 import me.dec7.domain.users.User;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 public class MyBatisUserDao implements UserDao {
 	
@@ -18,6 +12,9 @@ public class MyBatisUserDao implements UserDao {
 	
 	private SqlSession sqlSession;
 	
+	/*
+	 * flyway migration으로 필요 없어짐
+	 * 
 	private DataSource dataSource;
 	
 	@PostConstruct
@@ -28,6 +25,7 @@ public class MyBatisUserDao implements UserDao {
 		
 		log.info("database initialized success!!");
 	}
+	*/
 	
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
@@ -39,9 +37,11 @@ public class MyBatisUserDao implements UserDao {
 	 * Database를 초기화하기 위해 DataSource를 필요한 상황이 발생함.
 	 * 고칠 필요가 있음 
 	 */
+	/*
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
+	*/
 	
 	@Override
 	public User findById(String userId) {

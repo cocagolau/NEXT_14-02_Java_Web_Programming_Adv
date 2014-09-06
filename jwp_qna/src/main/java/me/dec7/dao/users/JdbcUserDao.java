@@ -3,18 +3,13 @@ package me.dec7.dao.users;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.annotation.PostConstruct;
-
 import me.dec7.domain.users.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 /*
  * spring jdbc 지원 기능을 dao 구현
@@ -33,6 +28,8 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 	 *  userDao라는 Class가 spring에 의해 instance가 생성되고 초기화 작업이 필요할 때
 	 *  initialize가 자동으로 호출되어 초기화 됨
 	 */ 
+	
+	/*
 	@PostConstruct
 	public void initialize() {
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
@@ -41,6 +38,7 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 		
 		log.info("database initialized success");
 	}
+	*/
 
 	/* (non-Javadoc)
 	 * @see me.dec7.dao.users.IUserDao#findById(java.lang.String)

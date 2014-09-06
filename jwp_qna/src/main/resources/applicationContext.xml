@@ -27,8 +27,8 @@
 		p:dataSource-ref="dataSource" /> -->
 		
 	<bean id="userDao" class="me.dec7.dao.users.MyBatisUserDao" 
-		p:sqlSession-ref="sqlSession"
-		p:dataSource-ref="dataSource" />
+		p:sqlSession-ref="sqlSession"  />
+		<!-- p:dataSource-ref="dataSource" /> -->
 	
 	<!-- mybatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
