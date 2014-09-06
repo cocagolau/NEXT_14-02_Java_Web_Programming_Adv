@@ -63,6 +63,26 @@ public class UserTest {
 		assertFalse(user.matchPassword(authenticate));
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void updateWhenMismatchUserId() throws Exception {
+		User user = new User("userId", "password", "name", "dec7@gmail.com");
+		User updateUser = new User("user", "password", "동규", "dec7@gmail.com");
+		
+		User updatedUser = user.update(updateUser);
+		
+	}
+	
+	@Test()
+	public void update() throws Exception {
+		User user = new User("userId", "password", "name", "dec7@gmail.com");
+		User updateUser = new User("userId", "password", "동규", "dec7@gmail.com");
+		
+		User updatedUser = user.update(updateUser);
+		
+		assertThat(updatedUser, is(updateUser));
+		
+	}
+	
 	
 
 }

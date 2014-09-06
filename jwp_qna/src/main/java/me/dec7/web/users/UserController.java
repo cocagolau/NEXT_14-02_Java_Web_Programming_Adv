@@ -230,10 +230,17 @@ public class UserController {
 		 * 보안2
 		 * 수정이기 때문에 로그인 된 사용자만 수정할 수 있어야함.
 		 */
+		/*
+		 * refactoring 후 user class의 update method내에 하위 내용을 담기 때문에 더 이상 필요 없어짐
+		 * 
+		 * 특정 데이터를 담는 class내에 비지니스 로직을 위임해야만 controller가 줄어들 수 있음.
+		 * 훨씬 객체지향적인 개발방식임
+		
 		String userId = (String) temp;
 		if (!user.matchUserId(userId)) {
 			throw new NullPointerException();
 		}
+		*/
 		
 		userDao.update(user);
 		log.debug("Database: {}", userDao.findById(user.getUserId()));
